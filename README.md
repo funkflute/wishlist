@@ -1,1 +1,8 @@
-# A Wishlist Site for my in-laws
+## Wishlist
+
+To run:
+
+```
+$ ./gradlew bootRun
+```
+
