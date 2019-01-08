@@ -25,7 +25,7 @@ class UserMvcTests {
 
 	@Test
 	fun `User Model Creation`() {
-		val request = post("/user")
+		val request = post("/users")
 			.content("{ \"name\": \"Fry\", \"email\": \"fry@example.com\"}")
 			.contentType(MediaType.APPLICATION_JSON_UTF8)
 			.accept(MediaType.APPLICATION_JSON_UTF8)

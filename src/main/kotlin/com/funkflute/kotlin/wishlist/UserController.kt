@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong
 @RestController
 class UserController {
 
-    @PostMapping("/user")
+    @PostMapping("/users")
     fun makeNewUser(@RequestBody user: User) = User(user.name, user.email)
 
 }
