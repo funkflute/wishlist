@@ -11,7 +11,7 @@ class ListTests {
     fun `Test New List Model`() {
 		val name: String = "John's Wishlist"
 		val user_id: UUID = UUID.randomUUID()
-		val list = List(user_id, name)
+		val list = List(name, user_id)
 
         assertEquals(list.name, name)
         assertEquals(list.user_id, user_id)

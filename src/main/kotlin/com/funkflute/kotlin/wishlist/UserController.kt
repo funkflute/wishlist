@@ -1,5 +1,6 @@
 package com.funkflute.kotlin.wishlist
 
+import java.util.UUID
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -12,6 +13,11 @@ import java.util.concurrent.atomic.AtomicLong
 class UserController {
 
     @PostMapping("/users")
-    fun makeNewUser(@RequestBody user: User) = User(user.name, user.email)
+    fun makeNewUser(@RequestBody user: User) : User {
+        return User(user.name, user.email)
+    }
+
+    @PostMapping("/users/{user_id}/lists")
+    fun makeNewList(@PathVariable user_id: UUID, @RequestBody list: List) = List(list.name, user_id)
 
 }

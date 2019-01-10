@@ -24,7 +24,7 @@ class UserMvcTests {
 	lateinit var mockMvc: MockMvc
 
 	@Test
-	fun `User Model Creation`() {
+	fun `User Creation`() {
 		val request = post("/users")
 			.content("{ \"name\": \"Fry\", \"email\": \"fry@example.com\"}")
 			.contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -37,4 +37,20 @@ class UserMvcTests {
 			.andExpect(jsonPath("$.email").value("fry@example.com"))
 			/* .andExpect(jsonPath("$.id").value()) */
 	}
+
+	@Test
+	fun `User List Creation`() {
+		val user = User("Leela", "leela@planex.com")
+		val request = post("/users/" + user.id + "/lists")
+			.content("{ \"name\": \"Leela's List\"}")
+			.contentType(MediaType.APPLICATION_JSON_UTF8)
+			.accept(MediaType.APPLICATION_JSON_UTF8)
+
+		mockMvc.perform(request)
+			.andExpect(status().isOk)
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+			.andExpect(jsonPath("$.name").value("Leela's List"))
+			/* .andExpect(jsonPath("$.id").value()) */
+	}
+
 }	
