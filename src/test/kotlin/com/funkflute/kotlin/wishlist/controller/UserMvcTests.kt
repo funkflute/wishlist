@@ -1,5 +1,8 @@
 package com.funkflute.kotlin.wishlist
 
+import java.util.UUID
+import java.util.Date
+
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -25,8 +28,14 @@ class UserMvcTests {
 
 	@Test
 	fun `User Creation`() {
+		val json = """
+{
+	"name": "Fry",
+	"email": "fry@example.com"
+}
+"""
 		val request = post("/users")
-			.content("{ \"name\": \"Fry\", \"email\": \"fry@example.com\"}")
+			.content(json)
 			.contentType(MediaType.APPLICATION_JSON_UTF8)
 			.accept(MediaType.APPLICATION_JSON_UTF8)
 
