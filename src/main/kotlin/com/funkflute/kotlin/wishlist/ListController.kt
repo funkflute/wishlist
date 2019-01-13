@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import java.util.concurrent.atomic.AtomicLong
 /*  */
 @RestController
-class UserController {
+class ListController {
 
-    @PostMapping("/users")
-    fun makeNewUser(@RequestBody user: User) = User(user.name, user.email)
-
-    @PostMapping("/users/{user_id}/lists")
-    fun makeNewList(@PathVariable user_id: UUID, @RequestBody list: List) = List(list.name, user_id)
+    @PostMapping("/lists/{list_id}/items")
+    fun makeNewItem(@PathVariable list_id: UUID, @RequestBody item: Item) = Item(item.name, item.url, list_id)
 
 }

@@ -48,18 +48,56 @@ class UserMvcTests {
 	}
 
 	@Test
-	fun `User List Creation`() {
+	fun `List Creation`() {
 		val user = User("Leela", "leela@planex.com")
+		val list_name = "Leela's List"
+		val json = """
+{
+"name": "$list_name"
+}
+"""
+
 		val request = post("/users/" + user.id + "/lists")
-			.content("{ \"name\": \"Leela's List\"}")
+			.content(json)
 			.contentType(MediaType.APPLICATION_JSON_UTF8)
 			.accept(MediaType.APPLICATION_JSON_UTF8)
 
 		mockMvc.perform(request)
 			.andExpect(status().isOk)
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-			.andExpect(jsonPath("$.name").value("Leela's List"))
+			.andExpect(jsonPath("$.name").value(list_name))
 			/* .andExpect(jsonPath("$.id").value()) */
+	}
+
+	@Test
+	fun `Item Creation`() {
+		val list_id: UUID = UUID.randomUUID()
+		val name = "Zero-G-Juggs" //  National Pornographic, Play-Boy-Ar-De, Zero-G-Juggs, Extra Long Honkers, Unique Knocker
+		val url = "http://Zero-G-Juggs.mag/subscribe"
+		val json = """
+{
+	"name": "$name",
+	"url": "$url"
+} 
+"""
+		val request = post("/lists/" + list_id + "/items")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON_UTF8)
+			.accept(MediaType.APPLICATION_JSON_UTF8)
+
+		mockMvc.perform(request)
+			.andExpect(status().isOk)
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+			.andExpect(jsonPath("$.name").value(name))
+			.andExpect(jsonPath("$.url").value(url))
+			.andExpect(jsonPath("$.list_id").value(list_id))
+			.andExpect(jsonPath("$.purchased_at").doesNotExist())
+			.andExpect(jsonPath("$.created_at").exists())
+			.andExpect(jsonPath("$.id").exists())
+	}
+
+	@Test
+	fun `Mark Item Purchased`() {
 	}
 
 }	
