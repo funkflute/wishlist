@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -98,6 +99,23 @@ class UserMvcTests {
 
 	@Test
 	fun `Mark Item Purchased`() {
+		val item: Item = Item("National Pornographic", "http://natporno.xxx")
+		val date: Date = Date()
+		val json = """
+{
+	"purchased_at": "$date"
+} 
+"""
+		val request = put("/items/" + item.id)
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON_UTF8)
+			.accept(MediaType.APPLICATION_JSON_UTF8)
+
+			mockMvc.perform(request)
+				.andExpect(status().isOk)
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.purchased_at").value(date.toString()))
+
 	}
 
 }	
