@@ -90,7 +90,7 @@ class UserMvcTests {
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 			.andExpect(jsonPath("$.name").value(name))
 			.andExpect(jsonPath("$.url").value(url))
-			.andExpect(jsonPath("$.list_id").value(list_id))
+			.andExpect(jsonPath("$.list_id").value(list_id.toString()))
 			.andExpect(jsonPath("$.purchased_at").doesNotExist())
 			.andExpect(jsonPath("$.created_at").exists())
 			.andExpect(jsonPath("$.id").exists())
